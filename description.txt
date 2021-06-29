@@ -1,0 +1,38 @@
+Baza danych nale¿¹ca do wytrówni filmowej ma za zadanie przechowywaæ informacje o filmach (tytul,
+gatunek, data produkcji, kraj produkcji, bud¿et).
+Film mo¿e mieæ jedn¹ recenzjê sk³adaj¹ca siê na opinie krytyków i opinie publicznoœci. W filmie mo¿e
+graæ wielu aktorów, a aktorzy w wielu filmach. Mo¿liwe jest pozyskanie informacji o roli w filmie oraz
+ga¿y do niej przydzielonej danemu aktorowi. Film re¿yseruje tylko jeden re¿yser, zaœ re¿yser mo¿e
+re¿yserowaæ wiele filmów. W przypadku aktora i re¿ysera w bazie znajduj¹ siê informacje o imieniu,
+nazwisku, dacie urodzenia oraz p³ci, a dodatkowo tylko w przypadku aktora o jego wzroœcie.
+Istnieje mo¿liwoœæ, aby aktor by³ re¿yserem.
+
+
+pl/sql
+
+procedura "wyrownaj_place" - Powiêksza ga¿e o 10% aktorom, je¿eli ich ga¿a nie przekracza 10%
+				bud¿etu filmu i jest on poni¿ej œredniego bud¿etu z ostatnich 5 lat.
+
+procedura "znajdz_naj_ocen_akt" - Znajduje aktorów graj¹cych w najlepiej ocenianym filmie, je¿eli 
+				urodzili siê po danym roku.
+
+wyzwalacz "t_usuniecie_filmu" - Usuwa obsadê i recenzjê filmu, który jest usuwany poleceniem delete. 
+				U³atwia pozbywanie siê zbêdnych danych i dbanie o wiêzy spójnoœci.
+
+wyzwalacz "t_usuniecie_osoby" - Sprawdza czy usuwana poleceniem osoba nie ma ról ani re¿yserowanych
+				filmów w bazie, jeœli tak to informuje o danych aktywnoœciach 
+				i zapobiega usuniêciu. Dba o wiêzy spójnoœci, by nie pozostawiæ 
+				pustych ról i filmów.
+
+t-sql
+
+procedura "znajdz_naj_oplac_akt" - Porównuj¹c ga¿e aktorów, wy³ania najlepiej œrednio zarabiaj¹cego.
+
+procedura "znajdz_naj_kont_rezy" - Prównuj¹c ró¿nice miedzy opini¹ krytyków a publicznoœci, wy³ania
+				re¿ysera o najwiekszej rozbierznoœci.
+
+wyzwalacz "t_aktualizacja_gazy" - Sprawdza w przypadku modyfikacji gazy badŸ dodaniu nowej roli, czy
+				suma ga¿ z danego filmu nie przekracza progu 20% jego bud¿etu.
+
+wyzwalacz "t_usuniecie_roli" - Po usuniêciu roli zlicza ile wynosi suma ga¿ z danego filmu oraz
+				jaki procent owa suma stanowi w bud¿ecie filmu.
